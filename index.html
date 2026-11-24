@@ -590,13 +590,22 @@
   function goApply(e) {
     if (e) e.preventDefault();
     var rect = target.getBoundingClientRect();
-    var y = rect.top + (window.pageYOffset || document.documentElement.scrollTop || 0) - 8;
+    var startY = window.pageYOffset || document.documentElement.scrollTop || 0;
+    var y = rect.top + startY - 8;
     if (y < 0) y = 0;
     jumpTo(y);
     // 같은 주소(#apply)에서 다시 눌러도 항상 다시 이동하도록 주소만 갱신
     if (window.history && history.replaceState) {
       try { history.replaceState(null, '', '#apply'); } catch (err) {}
     }
+    // 일부 인앱 브라우저에서 부드러운 스크롤이 먹통이면 바로 이동시킨다
+    window.setTimeout(function () {
+      var now = window.pageYOffset || document.documentElement.scrollTop || 0;
+      if (Math.abs(now - startY) < 20 && Math.abs(now - y) > 40) {
+        document.documentElement.scrollTop = y;
+        document.body.scrollTop = y;
+      }
+    }, 450);
   }
 
   var links = document.querySelectorAll('a[href="#apply"]');
