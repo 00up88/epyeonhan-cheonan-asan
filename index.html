@@ -260,6 +260,31 @@
   }
   .photo-card .cap b{font-weight:700}
 
+  /* ===== film (shorts) ===== */
+  .film-card{
+    margin-top:20px;border-radius:20px;overflow:hidden;background:var(--navy);
+    box-shadow:0 16px 40px rgba(11,26,47,.22);
+  }
+  .film-card video{
+    display:block;width:100%;height:auto;aspect-ratio:9/16;
+    background:#0b1a2f;object-fit:cover;
+  }
+  .film-note{
+    display:flex;align-items:center;justify-content:space-between;gap:10px;
+    padding:11px 14px;background:var(--navy);
+    color:rgba(255,255,255,.74);font-size:12px;line-height:1.45;letter-spacing:-0.01em;
+  }
+  .film-note b{display:block;color:#fff;font-weight:700;font-size:12.5px}
+  .film-note .flk{
+    flex:0 0 auto;display:inline-flex;align-items:center;gap:4px;
+    color:var(--gold-2);font-weight:600;white-space:nowrap;
+  }
+  .film-note .flk svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+  .film-cta{margin-top:12px}
+  @media (min-width:640px){
+    .film-card{max-width:400px;margin-left:auto;margin-right:auto}
+  }
+
   /* ===== apply ===== */
   .apply-wrap{margin-top:44px}
   .apply{
@@ -395,6 +420,28 @@
       </div>
     </div>
     <p class="fine">※ 표기된 금액과 조건은 계약 시점·호실·계약 형태에 따라 달라질 수 있으며, 최종 조건은 상담을 통해 확인하시기 바랍니다.</p>
+  </section>
+
+  <!-- 30초 홍보 영상 -->
+  <section class="sec" id="film">
+    <p class="eyebrow">30-Second Film</p>
+    <h2>30초면 충분합니다<br><em>영상으로 먼저 확인</em></h2>
+    <p class="sec-lead">천안아산역 바로 앞 입지와 잔여세대 조건을 30초 영상으로 담았습니다.</p>
+
+    <figure class="film-card">
+      <video src="shorts.mp4" poster="shorts-poster.jpg"
+             width="720" height="1280"
+             playsinline muted loop autoplay preload="metadata" controls
+             disablepictureinpicture controlslist="nodownload noplaybackrate"
+             aria-label="e편한세상시티 천안아산역 30초 홍보 영상"></video>
+      <figcaption class="film-note">
+        <span><b>e편한세상시티 천안아산역</b>30초 홍보 영상</span>
+        <a class="flk" href="https://youtube.com/shorts/8tSvL9aaTzs" target="_blank" rel="noopener noreferrer">유튜브에서 보기
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg>
+        </a>
+      </figcaption>
+    </figure>
+    <a class="btn btn-gold film-cta" href="#apply">영상 보고 특별 혜택 상담</a>
   </section>
 
   <!-- 입지 & 호재 -->
