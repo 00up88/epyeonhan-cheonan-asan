@@ -56,7 +56,7 @@
   /* ===== frame ===== */
   .page{
     max-width:480px;margin:0 auto;background:var(--white);
-    position:relative;overflow:hidden;
+    position:relative;overflow:hidden;overflow:clip;
     box-shadow:0 0 60px rgba(11,26,47,.14);
   }
   @media (min-width:640px){
@@ -287,6 +287,7 @@
 
   /* ===== apply ===== */
   .apply-wrap{margin-top:44px}
+  #apply{scroll-margin-top:8px}
   .apply{
     position:relative;background:linear-gradient(160deg,var(--navy) 0%,#0d2140 55%,#132f52 100%);
     color:#fff;padding:40px 20px 34px;overflow:hidden;
@@ -346,6 +347,7 @@
   .dock a{
     display:flex;align-items:center;justify-content:center;gap:7px;
     min-height:52px;border-radius:12px;font-size:15px;font-weight:800;letter-spacing:-0.03em;
+    cursor:pointer;touch-action:manipulation;
   }
   .dock .d-call{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.28);font-variant-numeric:tabular-nums}
   .dock .d-apply{
@@ -565,5 +567,43 @@
   </a>
   <a class="d-apply" href="#apply">상담 신청하기</a>
 </div>
+
+<script>
+/* 하단 고정 바·중간 CTA의 '상담신청'을 어떤 브라우저(인앱 웹뷰 포함)에서도 확실히 이동시킨다 */
+(function () {
+  var target = document.getElementById('apply');
+  if (!target) return;
+
+  var supportsSmooth = false;
+  try { supportsSmooth = 'scrollBehavior' in document.documentElement.style; } catch (e) {}
+  var reduceMotion = false;
+  try { reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+
+  function jumpTo(y) {
+    if (supportsSmooth && !reduceMotion) {
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    } else {
+      window.scrollTo(0, y);
+    }
+  }
+
+  function goApply(e) {
+    if (e) e.preventDefault();
+    var rect = target.getBoundingClientRect();
+    var y = rect.top + (window.pageYOffset || document.documentElement.scrollTop || 0) - 8;
+    if (y < 0) y = 0;
+    jumpTo(y);
+    // 같은 주소(#apply)에서 다시 눌러도 항상 다시 이동하도록 주소만 갱신
+    if (window.history && history.replaceState) {
+      try { history.replaceState(null, '', '#apply'); } catch (err) {}
+    }
+  }
+
+  var links = document.querySelectorAll('a[href="#apply"]');
+  for (var i = 0; i < links.length; i++) {
+    links[i].addEventListener('click', goApply);
+  }
+})();
+</script>
 </body>
 </html>
