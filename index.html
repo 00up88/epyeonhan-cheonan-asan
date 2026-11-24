@@ -602,8 +602,11 @@
     window.setTimeout(function () {
       var now = window.pageYOffset || document.documentElement.scrollTop || 0;
       if (Math.abs(now - startY) < 20 && Math.abs(now - y) > 40) {
-        document.documentElement.scrollTop = y;
-        document.body.scrollTop = y;
+        var html = document.documentElement;
+        var prev = html.style.scrollBehavior;
+        html.style.scrollBehavior = 'auto';
+        window.scrollTo(0, y);
+        html.style.scrollBehavior = prev;
       }
     }, 450);
   }
